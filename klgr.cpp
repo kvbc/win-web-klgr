@@ -24,7 +24,7 @@
 #define KLGR_EXIT_VK       VK_NEXT // key to exit
 #define KLGR_EXIT_HOLD     3       // time (in sec) to hold the KLGR_EXIT_VK key to exit
 
-#define KLGR_PROTECTEDTEXT_DELAY_MIN 5000 // min protectedtext update delay that the user can enter (in ms)
+#define KLGR_PROTECTEDTEXT_DELAY_MIN 15000 // min protectedtext update delay that the user can enter (in ms)
 #define KLGR_PROTECTEDTEXT_CALL "\".\\protected-text.exe\"" // system call to update protectedtext logs
 #define KLGR_PROTECTEDTEXT_IDPWD_FN "protected-text-idpwd.txt" // name of the file that stores protectedtext ID & password
 
