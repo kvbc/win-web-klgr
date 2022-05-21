@@ -2,7 +2,7 @@
 Simple Windows keylogger with web logging  
 Inspired by https://github.com/GiacomoLaw/Keylogger
 
-For educational purposes only
+For educational purposes only of course
 
 # Building
 
