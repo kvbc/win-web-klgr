@@ -1,6 +1,6 @@
 # win-klgr
 Simple Windows keylogger with web logging  
-Inspired by https://github.com/GiacomoLaw/Keylogger
+Inspired by https://github.com/GiacomoLaw/Keylogger  
 https://protectedtext.com
 
 For educational purposes only of course
