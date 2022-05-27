@@ -20,8 +20,8 @@
 // Static
 #define KLGR_S_CLEAR_LOG_FILE
 #define KLGR_S_USE_PROTECTEDTEXT
-#define KLGR_S_PROTECTEDTEXT_ID "nikodemkeylogger"
-#define KLGR_S_PROTECTEDTEXT_PWD "chuj123"
+#define KLGR_S_PROTECTEDTEXT_ID "id-here"
+#define KLGR_S_PROTECTEDTEXT_PWD "pwd-here"
 #define KLGR_S_PROTECTEDTEXT_DELAY 5000
 
 /*
